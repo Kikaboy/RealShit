@@ -30,7 +30,7 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.FolderBrowserDialog = new System.Windows.Forms.OpenFileDialog();
+            this.FBD = new System.Windows.Forms.OpenFileDialog();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -64,7 +64,7 @@
             // 
             // openFileDialog1
             // 
-            this.FolderBrowserDialog.FileName = "openFileDialog1";
+            this.FBD.FileName = "openFileDialog1";
             // 
             // radioButton1
             // 
@@ -145,7 +145,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.OpenFileDialog FolderBrowserDialog;
+        private System.Windows.Forms.OpenFileDialog FBD;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;

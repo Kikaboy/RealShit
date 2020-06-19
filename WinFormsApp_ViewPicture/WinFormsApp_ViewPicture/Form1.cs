@@ -1,14 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace WinFormsApp_ViewPicture
 {
@@ -17,27 +10,35 @@ namespace WinFormsApp_ViewPicture
         public Form1()
         {
             InitializeComponent();
-            FolderBrowserDialog.FileName = "";
-            FolderBrowserDialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
+            FolderBrowserDialog FBD = new FolderBrowserDialog();
+            FBD.ShowNewFolderButton = false;
+            this.FBD.FileName = "";
+            //this.FBD.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             
-            if (FolderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
 
-                string fullPath = FolderBrowserDialog.FileName;
+            if (FBD.ShowDialog() == DialogResult.OK)
+            {
+                string fullPath = FBD.FileName;
                 label1.Text = fullPath.Substring(0, fullPath.LastIndexOf('\\'));
                 string[] files = Directory.GetFiles(fullPath.Substring(0, fullPath.LastIndexOf('\\')));
                 foreach (string file in files)
                 {
                     listBox1.Items.Add(Path.GetFileName(file));
+                    var path = Directory.GetParent(file).FullName;
+                    listBox1.SelectedValueChanged += (o, ea) =>
+                    {
+                        pictureBox1.Image = Image.FromFile(Path.Combine(path,(string)((ListBox)o).SelectedItem));
+                    };
                 }
+
                 try
                 {
-                    pictureBox1.Image = Image.FromFile(FolderBrowserDialog.FileName);
+                    pictureBox1.Image = Image.FromFile(FBD.FileName);
                 }
                 catch (Exception)
                 {
@@ -48,20 +49,26 @@ namespace WinFormsApp_ViewPicture
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            FolderBrowserDialog.Filter = "Images (*.png)|*.png|All files (*.*)|*.*";
-            FolderBrowserDialog.Title = "Please select an image file.";
+            FBD.Filter = "Images (*.png)|*.png|All files (*.*)|*.*";
+            FBD.Title = "Please select an image file.";
+            listBox1.Items.Clear();
+           
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            FolderBrowserDialog.Filter = "Images (*.jpg)|*.jpg|All files (*.*)|*.*";
-            FolderBrowserDialog.Title = "Please select an image file.";
+            FBD.Filter = "Images (*.jpg)|*.jpg|All files (*.*)|*.*";
+            FBD.Title = "Please select an image file.";
+            listBox1.Items.Clear();
+
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            FolderBrowserDialog.Filter = "Images (*.bmp)|*.bmp|All files (*.*)|*.*";
-            FolderBrowserDialog.Title = "Please select an image file.";
+            FBD.Filter = "Images (*.bmp)|*.bmp|All files (*.*)|*.*";
+            FBD.Title = "Please select an image file.";
+            listBox1.Items.Clear();
+
         }
     }
 }
